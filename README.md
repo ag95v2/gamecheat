@@ -15,11 +15,10 @@ This program was tested on several random games.
    
   - wesnoth (some weird strategy) https://www.wesnoth.org/
    It is possible to change the amount of gold.
-
-Yet this approach failed with 0ad (nice strategy) https://play0ad.com/. 
-I was able to find out the address of integer variable which stores the amount of resourses, but could not change it (it immediately changes back). 
-Probably that is because of multithreading. The value is stored in anonymous memory map and I am stuck at the moment. 
-
+   
+  - 0ad (nice strategy) https://play0ad.com/. 
+  Amounts of resourses are stored in integer and double variables simoultaniously. 
+  Changing the double guys leads to profit.
 
 ## Detailed explaination:
 
@@ -33,7 +32,7 @@ Probably that is because of multithreading. The value is stored in anonymous mem
 ## Future plans
 
 - Normal cli interface
-- Different data types
+- More natural way of handling different data types (unsigned integers, float, double, unicode strings, ASCII...)
 - Watchpoints (increase the value if it is lower than.. etc)
 - Another search strategy 
   For example we know the pattern of change of target variable and make several memory dumps and then locate bytes which
