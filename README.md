@@ -20,6 +20,9 @@ This program was tested on several random games.
   Amounts of resourses are stored in integer and double variables simoultaniously. 
   Changing the double guys leads to profit.
 
+This approach failed with nice shooter called Assaultcube (https://assault.cubers.net/).
+Yet I am trying to figure out where is hp stored.
+
 ## Detailed explaination:
 
 1) We manually parse the contents of /proc/PID/maps to get memory regions
