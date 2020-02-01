@@ -2,18 +2,18 @@
 Proof-of-the concept linux game cheating engine (draft version)
 
 ## What can it do?
-  -Scan the entire address space of target process (game)
-  -Find specific value (amount of gold)
-  -Change it
+  - Scan the entire address space of target process (game)
+  - Find specific value (amount of gold)
+  - Change it
 
 ..Sometimes this super simple strategy gives amazing results!
 This program was tested on several random games.
 
 ## Crackable games examples:
-  -bastet (one really awkward tetris clone)
+  - bastet (one really awkward tetris clone)
    It is possible to change the score. Result is visible at the end.
    
-  -wesnoth (some weird strategy) https://www.wesnoth.org/
+  - wesnoth (some weird strategy) https://www.wesnoth.org/
    It is possible to change the amount of gold.
 
 Yet this approach failed with 0ad (nice strategy) https://play0ad.com/. 
