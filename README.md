@@ -10,7 +10,8 @@ Proof-of-the concept linux game cheating engine (draft version)
 This program was tested on several random games.
 
 ## Crackable games examples:
-  - bastet (one really awkward tetris clone)
+  - bastet (one really awkward tetris clone) 
+    https://www.cyberciti.biz/open-source/bastet-tetrisr-clone-game-for-linux-unix-console/
    It is possible to change the score. Result is visible at the end.
    
   - wesnoth (some weird strategy) https://www.wesnoth.org/
@@ -21,7 +22,7 @@ This program was tested on several random games.
   Changing the double guys leads to profit.
 
   - Nice shooter called Assaultcube (https://assault.cubers.net/). 
-  We can change the amount of frags! Yet I am trying to figure out where is hp and armor stored.
+  We can change the amount of frags, hp and armor. They are stored in integer variables =)
 
 ## Detailed explaination:
 
