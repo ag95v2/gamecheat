@@ -20,7 +20,7 @@ This program was tested on several random games.
   Amounts of resourses are stored in integer and double variables simoultaniously. 
   Changing the double guys leads to profit.
 
-  -Nice shooter called Assaultcube (https://assault.cubers.net/). 
+  - Nice shooter called Assaultcube (https://assault.cubers.net/). 
   We can change the amount of frags! Yet I am trying to figure out where is hp and armor stored.
 
 ## Detailed explaination:
