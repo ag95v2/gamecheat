@@ -5,26 +5,22 @@
 
 int main()
 {
-	int	*x;
-	int	*y;
-	int z;
+	double  *x;
 	char	*l;
 	size_t n;
 
-	z = 100;
 	printf("PID: %d\n", getpid());
-	x = malloc(sizeof(int));
-	*x = 100;
-	y = malloc(sizeof(int));
-	*y = 100;
+	x = malloc(sizeof(double));
+	*x = 100.0;
 	l = 0;
 	while (1)
 	{
-		printf("y = %d\nChange the y value(or press X to skip):\n", *y);
+		printf("x = %f\nChange the x value(or press X to skip):\n", *x);
 		getline(&l, &n, stdin);
 		if (*l == 'X')
 			continue ;
-		*y = atoi(l);
+		*x = strtod(l, NULL);
 	}
+	free(l);
 	return (0);
 }

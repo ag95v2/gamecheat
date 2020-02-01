@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "memmap.h"
@@ -39,18 +40,25 @@ t_list *lstadd(t_list *l, void *location)
 	return (new);
 }
 
+double	d_abs(double a)
+{
+	return (a < 0 ? -a : a);
+}
+
 /*
 ** Return 0 if value found
 */
 
-int scan_location(void *addr, pid_t pid, int value)
+#define EPSILON 0.0001
+
+int scan_location(void *addr, pid_t pid, double value)
 {
 	struct iovec local[1];
 	struct iovec remote[1];
-	int          buf1;
+	double          buf1;
 	ssize_t      nread;
 
-	int				needed_len = sizeof(int);
+	int				needed_len = sizeof(double);
 
 	local[0].iov_base = (void *)&buf1;
 	local[0].iov_len = needed_len;
@@ -64,10 +72,10 @@ int scan_location(void *addr, pid_t pid, int value)
 		fprintf(stderr, "Failed to read. %s\n", strerror(errno));
 		return (1);
 	}
-	return (value - buf1);
+	return (d_abs(value - buf1) > EPSILON ? 1 : 0);
 }
 
-t_list	*subset_list(t_list *l, pid_t pid, int new_value)
+t_list	*subset_list(t_list *l, pid_t pid, double new_value)
 {
 	t_list *prev;
 	t_list *current;
@@ -117,7 +125,7 @@ t_list	*subset_list(t_list *l, pid_t pid, int new_value)
 ** Actually, not only heap, but all except dll and drivers
 */
 
-t_list	*scan_heap(t_memmap *memmap, pid_t pid, int value)
+t_list	*scan_heap(t_memmap *memmap, pid_t pid, double value)
 {
 	struct iovec local[1];
 	struct iovec remote[1];
@@ -173,9 +181,9 @@ t_list	*scan_heap(t_memmap *memmap, pid_t pid, int value)
 		//printf("Scanning for value: %d\n", value);
 
 		pos = 0;
-		while (pos <= nread - sizeof(int))
+		while (pos <= nread - sizeof(double))
 		{
-			if ((*(int *)(buf1 + pos) == value) || (*(unsigned int*)(buf1 + pos) == (unsigned int)value))
+			if (d_abs((*(double *)(buf1 + pos)) - value) < EPSILON)
 			{
 				tmp = lstadd(locations, (void *)(memmap->info->start + pos));
 				// Delete the list in normal program
@@ -265,14 +273,14 @@ void	value_summary(t_memmap *memmap, t_list *addrs)
 	printf("SUMMARY\nHeap: %d\nStack: %d\nStatic storage: %d\nAnon maps: %d\nShared libs: %d\nOther: %d\n", h,st,bss,anon,shl,oth);
 }
 
-void change_value(void *addr, pid_t pid, int new_value)
+void change_value(void *addr, pid_t pid, double new_value)
 {
 	struct iovec local[1];
 	struct iovec remote[1];
-	int          buf1;
+	double          buf1;
 	ssize_t      nread;
 
-	int				needed_len = sizeof(int);
+	int				needed_len = sizeof(double);
 
 	buf1 = new_value;
 	local[0].iov_base = (void *)&buf1;
@@ -291,7 +299,7 @@ void change_value(void *addr, pid_t pid, int new_value)
 }
 
 
-void change_everywhere(t_list *addrs, int new_value, t_memmap *memmap, pid_t pid)
+void change_everywhere(t_list *addrs, double new_value, t_memmap *memmap, pid_t pid)
 {
 	enum region_type t;
 
@@ -310,7 +318,7 @@ void	repl()
 	char	*l;
 	size_t	len;
 	pid_t	pid;
-	int		val;
+	double		val;
 	t_memmap *memmap;
 	t_list	*addrs;
 	int	count;
@@ -324,7 +332,7 @@ void	repl()
 
 	printf("%s\n", "Enter the deicmal value to search for:");
 	getline(&l, &len, stdin);
-	val = atoi(l);
+	val = strtod(l, NULL);
 
 	addrs = scan_heap(memmap, pid, val);
 
@@ -335,14 +343,14 @@ void	repl()
 		if (*l == 's')
 		{
 			// Command to change everywhere. Very risky!!!
-			val = atoi(l + 1);
+			val = strtod(l + 1, NULL);
 			change_everywhere(addrs, val, memmap, pid);
 			continue ;
 		}
 
-		val = atoi(l);
+		val = strtod(l, NULL);
 				
-		printf("Searching now for value: %d\n", val);
+		printf("Searching now for value: %f\n", val);
 		addrs = subset_list(addrs, pid, val);
 		value_summary(memmap, addrs);
 	}
