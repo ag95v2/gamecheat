@@ -1,6 +1,6 @@
 # gamecheat
 Proof-of-the concept linux game cheating engine (draft version)
-![](example.jpg)
+![](2020-02-02-044744_1600x900_scrot.jpg)
 ## What can it do?
   - Scan the entire address space of target process (game)
   - Find specific value (amount of gold)
