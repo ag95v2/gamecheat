@@ -1,6 +1,8 @@
 # gamecheat
 Proof-of-the concept linux game cheating engine (draft version)
-![](2020-02-02-044744_1600x900_scrot.jpg)
+
+<img src="https://github.com/ag95v2/gamecheat/blob/master/2020-02-02-044744_1600x900_scrot.jpg" width="500" height="400">
+
 ## What can it do?
   - Scan the entire address space of target process (game)
   - Find specific value (amount of gold)
